@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthenticationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cloud-gateway</a> &gt; <a href="index.source.html" class="el_package">com.example.cloudgateway.controller</a> &gt; <span class="el_source">JwtAuthenticationController.java</span></div><h1>JwtAuthenticationController.java</h1><pre class="source lang-java linenums">package com.example.cloudgateway.controller;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.cloudgateway.models.AuthenticationStatus;
+import com.example.cloudgateway.models.ErrorResponseDto;
+import com.example.cloudgateway.models.JwtRequest;
+import com.example.cloudgateway.models.JwtResponse;
+import com.example.cloudgateway.security.JwtTokenUtil;
+
+@RestController
+public class JwtAuthenticationController {
+
+	@Autowired
+	private final JwtTokenUtil jwtTokenUtil;
+
+<span class="fc" id="L27">	public JwtAuthenticationController(JwtTokenUtil jwtTokenUtil) {</span>
+<span class="fc" id="L28">		this.jwtTokenUtil = jwtTokenUtil;</span>
+<span class="fc" id="L29">	}</span>
+
+	/**
+	 * * *** NOTE: ***
+	 * * Api Gateway should match predicate
+	 * * path to be discoverable in swagger
+	 */
+	@RequestMapping(value = &quot;gateway-service&quot; + &quot;/authenticate&quot;, method = RequestMethod.POST)
+	public ResponseEntity&lt;?&gt; createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+<span class="nc" id="L38">		AuthenticationStatus status = authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (!status.getIsAuthenticated()) {</span>
+<span class="nc" id="L41">			List&lt;String&gt; details = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L42">			details.add(status.getMessage());</span>
+<span class="nc" id="L43">			ErrorResponseDto error = new ErrorResponseDto(new Date(), HttpStatus.UNAUTHORIZED.value(), &quot;UNAUTHORIZED&quot;, details, &quot;uri&quot;);</span>
+<span class="nc" id="L44">			return new ResponseEntity&lt;&gt;(error, HttpStatus.UNAUTHORIZED);</span>
+		}
+
+<span class="nc" id="L47">		final String token = jwtTokenUtil.generateToken(authenticationRequest.getUsername());</span>
+<span class="nc" id="L48">		return ResponseEntity.ok(new JwtResponse(token));</span>
+	}
+
+	private AuthenticationStatus authenticate(String username, String password) {
+		AuthenticationStatus status;
+
+<span class="nc bnc" id="L54" title="All 4 branches missed.">		if (!username.equals(&quot;admin&quot;) &amp;&amp; !password.equals(&quot;admin&quot;)) {</span>
+<span class="nc" id="L55">			status = new AuthenticationStatus(false, &quot;Invalid Username/Password&quot;);</span>
+		}
+		else {
+<span class="nc" id="L58">			status = new AuthenticationStatus(true, &quot;Authentication Successful&quot;);</span>
+		}
+
+<span class="nc" id="L61">		return status;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

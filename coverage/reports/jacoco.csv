@@ -1,0 +1,15 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+cloud-gateway,com.example.cloudgateway,CloudGatewayApplication,5,3,0,0,2,1,1,1,1,1
+cloud-gateway,com.example.cloudgateway.config,JwtConfig,13,11,0,0,5,5,4,3,4,3
+cloud-gateway,com.example.cloudgateway.controller,JwtAuthenticationController,75,6,6,0,12,3,5,1,2,1
+cloud-gateway,com.example.cloudgateway.security,AuthenticationFilter.Config,0,3,0,0,0,1,0,1,0,1
+cloud-gateway,com.example.cloudgateway.security,JwtTokenUtil,99,6,4,0,22,3,4,1,2,1
+cloud-gateway,com.example.cloudgateway.security,RouterValidator,12,15,0,0,3,3,2,2,2,2
+cloud-gateway,com.example.cloudgateway.security,AuthenticationFilter,95,20,6,0,18,7,4,3,1,3
+cloud-gateway,com.example.cloudgateway.exception,JwtTokenIncorrectStructureException,22,0,0,0,4,0,2,0,2,0
+cloud-gateway,com.example.cloudgateway.exception,JwtTokenMalformedException,4,0,0,0,2,0,1,0,1,0
+cloud-gateway,com.example.cloudgateway.exception,JwtTokenMissingException,4,0,0,0,2,0,1,0,1,0
+cloud-gateway,com.example.cloudgateway.models,JwtResponse,16,0,0,0,4,0,4,0,4,0
+cloud-gateway,com.example.cloudgateway.models,AuthenticationStatus,23,0,0,0,4,0,5,0,5,0
+cloud-gateway,com.example.cloudgateway.models,JwtRequest,26,0,0,0,5,0,6,0,6,0
+cloud-gateway,com.example.cloudgateway.models,ErrorResponseDto,256,0,40,0,8,0,36,0,16,0

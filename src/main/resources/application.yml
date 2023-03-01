@@ -1,0 +1,59 @@
+server:
+  port: 8080
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true      
+
+spring:
+  application:
+    name: gateway-service
+  config:
+    import: optional:configserver:http://localhost:8888/  
+  cloud:
+    gateway:
+      routes:
+      - id: accountID
+        uri: lb://account-service
+        predicates:
+        - Path=/account/**
+        filters:
+        - AuthenticationFilter
+      - id: creditID
+        uri: lb://credit-service
+        predicates:
+        - Path=/credit/**
+        filters:
+        - AuthenticationFilter
+      - id: customerID
+        uri: lb://customer-service
+        predicates:
+        - Path=/customer/**  
+        filters:
+        - AuthenticationFilter
+      - id: debitID
+        uri: lb://debit-service
+        predicates:
+        - Path=/debit/**  
+        filters:
+        - AuthenticationFilter
+      - id: apigateway
+        uri: http://localhost:8008/
+        predicates:
+        - Path=/gateway-service/**
+        filters:
+        - AuthenticationFilter
+    config:
+      uri: http://localhost:8888
+      fail-fast: false
+      retry:
+        maxAttempts: 20
+      enabled: false      
+
+jwt:
+  secret: testing
+  validity: 20
+  ##authDisabled: true          
