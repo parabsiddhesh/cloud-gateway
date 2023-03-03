@@ -12,7 +12,7 @@ spring:
   application:
     name: gateway-service
   config:
-    import: optional:configserver:http://localhost:8888/  
+    import: optional:configserver:https://cloud-config-server-git-parabsiddhesh-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/  
   cloud:
     gateway:
       routes:
@@ -47,7 +47,7 @@ spring:
         filters:
         - AuthenticationFilter
     config:
-      uri: http://localhost:8888
+      uri: https://cloud-config-server-git-parabsiddhesh-dev.apps.sandbox-m3.1530.p1.openshiftapps.com
       fail-fast: false
       retry:
         maxAttempts: 20
